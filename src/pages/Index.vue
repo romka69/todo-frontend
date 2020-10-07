@@ -11,6 +11,12 @@
       v-if="tasks.length"
       :tasks = "tasks"
     />
+
+    <TasksCompleted
+      v-if="tasks.length"
+      :tasks = "tasks"
+      class="q-mt-xl"
+    />
   </q-page>
 </template>
 
@@ -18,6 +24,7 @@
 import { backend } from "src/api"
 import NoTasks from "components/Tasks/NoTasks"
 import TasksTodo from "components/Tasks/TasksTodo"
+import TasksCompleted from "components/Tasks/TasksCompleted"
 
 export default {
   name: 'PageIndex',
@@ -54,6 +61,7 @@ export default {
   components: {
     NoTasks,
     TasksTodo,
+    TasksCompleted,
   }
 }
 </script>

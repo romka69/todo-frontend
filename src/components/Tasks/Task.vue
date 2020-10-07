@@ -1,9 +1,13 @@
 <template>
   <q-item
     v-ripple
-    class="bg-blue-grey-1"
+    :class="task.completed ? 'bg-green-1' : 'bg-blue-grey-1'"
     clickable
   >
+    <q-item-section side top>
+      <q-checkbox :value="task.completed" class="no-pointer-events" />
+    </q-item-section>
+    
     <q-item-section>
       <q-item-label>
         {{ task.title }}

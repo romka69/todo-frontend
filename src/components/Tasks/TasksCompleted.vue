@@ -1,9 +1,9 @@
 <template>
   <div>
     <Header
-      bgColor="bg-blue-grey-4"
+      bgColor="bg-green-4"
     >
-      Todo
+      Completed
     </Header>
 
     <q-list separator bordered>
@@ -21,7 +21,7 @@ import Header from "components/Tasks/Header"
 import Task from "components/Tasks/Task"
 
 export default {
-  name: "TasksTodo",
+  name: "TasksCompleted",
 
   props: {
     tasks: {
@@ -36,4 +36,3 @@ export default {
   }
 };
 </script>
-
