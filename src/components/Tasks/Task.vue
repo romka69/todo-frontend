@@ -26,10 +26,22 @@
         </div>
       </div>
     </q-item-section>
+
+    <q-item-section side>
+      <div class="row">
+        <q-btn
+          @click="deleteTask"
+          flat
+          color="red-5"
+          icon="eva-trash-2-outline"
+        />
+      </div>
+    </q-item-section>
   </q-item>
 </template>
 
 <script>
+import { backend } from "src/api"
 import { date } from "quasar";
 
 export default {
@@ -40,18 +52,16 @@ export default {
       item: Object,
       default: () => ({})
     },
-    id: {
-      item: String,
-      default: ""
-    },
-    completed: {
-      item: Boolean,
-      default: false
-    },
-    created_at: {
-      item: String,
-      default: ""
-    },
+  },
+
+  methods: {
+    deleteTask() {
+      backend.task.delete(this.task.id)
+        .then(response => {
+          this.$emit("delete-task", this.task);
+        })
+        .catch(error => { console.log(error) })
+    }
   },
 
   filters: {

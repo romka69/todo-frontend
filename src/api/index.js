@@ -10,6 +10,7 @@ const backend = {
   task: {
     index: () => adapter.get('/tasks'),
     create: (params) => adapter.post('/tasks', params),
+    delete: (id) => adapter.delete(`/tasks/${id}`),
   },
 };
 

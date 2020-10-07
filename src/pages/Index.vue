@@ -15,11 +15,13 @@
     <TasksTodo
       v-if="tasksTodo.length"
       :tasks = "tasksTodo"
+      @delete-task="deleteTask"
     />
 
     <TasksCompleted
       v-if="tasksCompleted.length"
       :tasks = "tasksCompleted"
+      @delete-task="deleteTask"
       class="q-mt-xl"
     />
   </q-page>
@@ -70,7 +72,18 @@ export default {
     },
 
     pushTask(task) {
-      this.tasksTodo.push(task)
+      this.tasksTodo.push(task);
+    },
+
+    deleteTask(task) {
+      const tasks = task.completed ? this.tasksCompleted : this.tasksTodo;
+
+      tasks.forEach(item => {
+        if (item.id == task.id) {
+          this.$delete(tasks, tasks.indexOf(item));
+          return;
+        }
+      })
     },
   },
   

@@ -8,9 +8,10 @@
 
     <q-list separator bordered>
       <Task
-        v-for="(task, key) in tasks"
-        :key="key"
+        v-for="(task) in tasks"
+        :key="task.id"
         :task="task"
+        @delete-task="deleteTask"
       />
     </q-list>
   </div>
@@ -28,6 +29,12 @@ export default {
       type: Array,
       default: []
     },
+  },
+
+  methods: {
+    deleteTask(task) {
+      this.$emit("delete-task", task);
+    }
   },
 
   components: {
