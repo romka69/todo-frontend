@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { backend } from "src/api"
 import NoTasks from "components/Tasks/NoTasks"
 import TasksTodo from "components/Tasks/TasksTodo"
 
@@ -35,6 +36,18 @@ export default {
           completed: false
         },
       ]
+    }
+  },
+
+  created() {
+    this.fetchTasks();
+  },
+
+  methods: {
+    fetchTasks() {
+      backend.task.index()
+        .then(({ data }) => this.tasks = data)
+        .catch(error => console.log(error))
     }
   },
   
