@@ -1,5 +1,10 @@
 <template>
   <q-page class="q-pa-lg">
+    <AddTask
+      @push-task="pushTask"
+      class="row q-mb-lg"
+    />
+
     <NoTasks
       v-if="!tasksTodo.length"
       icon="eva-checkmark-outline"
@@ -22,6 +27,7 @@
 
 <script>
 import { backend } from "src/api"
+import AddTask from "components/Tasks/AddTask"
 import NoTasks from "components/Tasks/NoTasks"
 import TasksTodo from "components/Tasks/TasksTodo"
 import TasksCompleted from "components/Tasks/TasksCompleted"
@@ -62,12 +68,17 @@ export default {
       this.tasksTodo = tasksNotCompleted;
       this.tasksCompleted = tasksCompleted;
     },
+
+    pushTask(task) {
+      this.tasksTodo.push(task)
+    },
   },
   
   components: {
     NoTasks,
     TasksTodo,
     TasksCompleted,
+    AddTask,
   }
 }
 </script>

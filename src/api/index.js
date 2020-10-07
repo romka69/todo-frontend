@@ -8,7 +8,8 @@ const adapter = axios.create({
 
 const backend = {
   task: {
-    index: () => adapter.get('/tasks')
+    index: () => adapter.get('/tasks'),
+    create: (params) => adapter.post('/tasks', params),
   },
 };
 
