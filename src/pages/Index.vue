@@ -15,12 +15,14 @@
     <TasksTodo
       v-if="tasksTodo.length"
       :tasks = "tasksTodo"
+      @update-task="updateTask"
       @delete-task="deleteTask"
     />
 
     <TasksCompleted
       v-if="tasksCompleted.length"
       :tasks = "tasksCompleted"
+      @update-task="updateTask"
       @delete-task="deleteTask"
       class="q-mt-xl"
     />
@@ -75,16 +77,29 @@ export default {
       this.tasksTodo.push(task);
     },
 
+    updateTask(task) {
+      if (task.completed) {
+        this.searchAndDelete(this.tasksTodo, task)
+        this.tasksCompleted.push(task);
+      } else {
+        this.searchAndDelete(this.tasksCompleted, task)
+        this.tasksTodo.push(task);
+      }
+    },
+
     deleteTask(task) {
       const tasks = task.completed ? this.tasksCompleted : this.tasksTodo;
+      this.searchAndDelete(tasks, task)
+    },
 
-      tasks.forEach(item => {
-        if (item.id == task.id) {
-          this.$delete(tasks, tasks.indexOf(item));
+    searchAndDelete(scope, itemToDel) {
+      scope.forEach(item => {
+        if (item.id == itemToDel.id) {
+          this.$delete(scope, scope.indexOf(item));
           return;
         }
       })
-    },
+    }
   },
   
   components: {

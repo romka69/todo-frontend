@@ -11,6 +11,7 @@
         v-for="(task) in tasks"
         :key="task.id"
         :task="task"
+        @update-task="updateTask"
         @delete-task="deleteTask"
       />
     </q-list>
@@ -32,6 +33,9 @@ export default {
   },
 
   methods: {
+    updateTask(task) {
+      this.$emit("update-task", task);
+    },
     deleteTask(task) {
       this.$emit("delete-task", task);
     }

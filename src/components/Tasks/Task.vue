@@ -4,11 +4,18 @@
     :class="task.completed ? 'bg-green-1' : 'bg-blue-grey-1'"
     clickable
   >
-    <q-item-section side top>
-      <q-checkbox :value="task.completed" class="no-pointer-events" />
+    <q-item-section
+      @click="updateTask"
+      side
+      top
+    >
+      <q-checkbox
+        :value="task.completed"
+        class="no-pointer-events"
+      />
     </q-item-section>
 
-    <q-item-section>
+    <q-item-section @click="updateTask">
       <q-item-label>
         {{ task.title }}
       </q-item-label>
@@ -17,10 +24,17 @@
     <q-item-section side>
       <div class="row">
         <div class="column justify-center">
-          <q-icon name="eva-calendar-outline" size="xs" class="q-mr-xs" />
+          <q-icon
+            name="eva-calendar-outline"
+            size="xs"
+            class="q-mr-xs"
+          />
         </div>
         <div class="column">
-          <q-item-label class="row justify-end" caption>
+          <q-item-label
+            class="row justify-end"
+            caption
+          >
             {{ task.created_at | goodDate }}
           </q-item-label>
         </div>
@@ -55,12 +69,24 @@ export default {
   },
 
   methods: {
+    updateTask() {
+      backend.task.update({ 
+        id: this.task.id,
+        completed: !this.task.completed
+      })
+        .then(response => {
+          this.task.completed = !this.task.completed
+          this.$emit("update-task", this.task);
+        })
+        .catch(error => console.log(error))
+    },
+
     deleteTask() {
       backend.task.delete(this.task.id)
         .then(response => {
           this.$emit("delete-task", this.task);
         })
-        .catch(error => { console.log(error) })
+        .catch(error => console.log(error))
     }
   },
 
