@@ -1,20 +1,20 @@
 <template>
   <q-page class="q-pa-lg">
     <NoTasks
-      v-if="!tasks.length"
+      v-if="!tasksTodo.length"
       icon="eva-checkmark-outline"
     >
       No tasks for to do!
     </NoTasks>
 
     <TasksTodo
-      v-if="tasks.length"
-      :tasks = "tasks"
+      v-if="tasksTodo.length"
+      :tasks = "tasksTodo"
     />
 
     <TasksCompleted
-      v-if="tasks.length"
-      :tasks = "tasks"
+      v-if="tasksCompleted.length"
+      :tasks = "tasksCompleted"
       class="q-mt-xl"
     />
   </q-page>
@@ -31,18 +31,8 @@ export default {
 
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          title: "Task 1",
-          completed: false
-        },
-        {
-          id: 2,
-          title: "Task 2",
-          completed: false
-        },
-      ]
+      tasksTodo: [],
+      tasksCompleted: [],
     }
   },
 
@@ -53,9 +43,25 @@ export default {
   methods: {
     fetchTasks() {
       backend.task.index()
-        .then(({ data }) => this.tasks = data)
+        .then(({ data }) => this.sortingTasks(data))
         .catch(error => console.log(error))
-    }
+    },
+
+    sortingTasks(tasks) {
+      const tasksNotCompleted = [],
+            tasksCompleted = [];
+
+      tasks.forEach(task => {
+        if (task.completed) {
+          tasksCompleted.push(task);
+        } else {
+          tasksNotCompleted.push(task);
+        }
+      });
+
+      this.tasksTodo = tasksNotCompleted;
+      this.tasksCompleted = tasksCompleted;
+    },
   },
   
   components: {
