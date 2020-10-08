@@ -1,31 +1,45 @@
 <template>
-  <q-page class="q-pa-lg">
-    <AddTask
-      @push-task="pushTask"
-      class="row q-mb-lg"
-    />
+  <q-page class="q-pt-lg">
+    <div class="absolute full-height full-width column">
+      <template v-if="tasksDownloaded">
+        <AddTask
+          @push-task="pushTask"
+          class="row q-mb-sm"
+        />
 
-    <NoTasks
-      v-if="!tasksTodo.length"
-      icon="eva-checkmark-outline"
-    >
-      No tasks for to do!
-    </NoTasks>
+        <q-scroll-area class="q-scroll-area-tasks">
+          <div class="relative-position">
+            <NoTasks
+              v-if="!tasksTodo.length"
+              icon="eva-checkmark-outline"
+            >
+              No tasks for to do!
+            </NoTasks>
 
-    <TasksTodo
-      v-if="tasksTodo.length"
-      :tasks = "tasksTodo"
-      @update-task="updateTask"
-      @delete-task="deleteTask"
-    />
+            <TasksTodo
+              v-if="tasksTodo.length"
+              :tasks = "tasksTodo"
+              @update-task="updateTask"
+              @delete-task="deleteTask"
+            />
 
-    <TasksCompleted
-      v-if="tasksCompleted.length"
-      :tasks = "tasksCompleted"
-      @update-task="updateTask"
-      @delete-task="deleteTask"
-      class="q-mt-xl"
-    />
+            <TasksCompleted
+              v-if="tasksCompleted.length"
+              :tasks = "tasksCompleted"
+              @update-task="updateTask"
+              @delete-task="deleteTask"
+              class="q-mb-xl"
+            />
+          </div>
+        </q-scroll-area>
+      </template>
+
+      <template v-else>
+        <div class="absolute-center">
+          <q-spinner-puff color="primary" size="4em" />
+        </div>
+      </template>
+    </div>
   </q-page>
 </template>
 
@@ -41,6 +55,7 @@ export default {
 
   data() {
     return {
+      tasksDownloaded: false,
       tasksTodo: [],
       tasksCompleted: [],
     }
@@ -53,7 +68,10 @@ export default {
   methods: {
     fetchTasks() {
       backend.task.index()
-        .then(({ data }) => this.sortingTasks(data))
+        .then(({ data }) => {
+          this.sortingTasks(data);
+          this.tasksDownloaded = true;
+        })
         .catch(error => console.log(error))
     },
 
@@ -110,3 +128,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .q-scroll-area-tasks {
+    display: flex;
+    flex-grow: 1;
+  }
+</style>

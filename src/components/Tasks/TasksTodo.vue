@@ -1,21 +1,28 @@
 <template>
-  <div>
-    <Header
-      bgColor="bg-blue-grey-4"
-    >
-      Todo
-    </Header>
+  <transition
+    appear
+    enter-active-class="animated fadeIn"
+    leave-active-class="animated fadeOut absolute-top"
+  >
+    <div>
+      <Header bgColor="bg-blue-grey-5">
+        Todo
+      </Header>
 
-    <q-list separator bordered>
-      <Task
-        v-for="(task) in tasks"
-        :key="task.id"
-        :task="task"
-        @update-task="updateTask"
-        @delete-task="deleteTask"
-      />
-    </q-list>
-  </div>
+      <q-list
+        separator
+        bordered
+      >
+        <Task
+          v-for="(task) in tasks"
+          :key="task.id"
+          :task="task"
+          @update-task="updateTask"
+          @delete-task="deleteTask"
+        />
+      </q-list>
+    </div>
+  </transition>
 </template>
 
 <script>

@@ -16,7 +16,7 @@
     </q-item-section>
 
     <q-item-section @click="updateTask">
-      <q-item-label>
+      <q-item-label class="task-title">
         {{ task.title }}
       </q-item-label>
     </q-item-section>
@@ -26,13 +26,12 @@
         <div class="column justify-center">
           <q-icon
             name="eva-calendar-outline"
-            size="xs"
+            size="sm"
             class="q-mr-xs"
           />
         </div>
-        <div class="column">
+        <div class="column justify-center">
           <q-item-label
-            class="row justify-end"
             caption
           >
             {{ task.created_at | goodDate }}
@@ -97,3 +96,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .task-title {
+    word-break: break-word;
+  }
+</style>

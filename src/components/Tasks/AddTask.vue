@@ -1,5 +1,4 @@
 <template>
-
   <q-input
     outlined
     v-model.trim="taskToSubmit.title"
