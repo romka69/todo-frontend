@@ -2,12 +2,12 @@
 
 Simple Todo App based on [Quasar framework](https://quasar.dev/), based on Vue.js.
 
-This is the front-end part of the project. [Backend here](https://github.com/romka69/todo-backend)
+This is the front-end part of the project. [Backend here](https://github.com/zakharoff/todo-backend)
 
 ![](https://i.imgur.com/8VCwDJl.png)
 
 ## Usage
-1. Run [Backend](https://github.com/romka69/todo-backend)
+1. Run [Backend](https://github.com/zakharoff/todo-backend)
 
 2. Run the compiled project with [serve](https://www.npmjs.com/package/serve) package from the folder `dist/spa/`
 
